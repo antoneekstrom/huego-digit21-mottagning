@@ -3,6 +3,27 @@
   padding: 25px;
 }
 
+.confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.habibi {
+  position: fixed;
+  top: 300px;
+  left: 700px;
+}
+
+.helicopter {
+  position: fixed;
+  top: 300px;
+  left: 700px;
+}
+
 button {
   background: transparent;
   box-shadow: 0px 0px 0px transparent;

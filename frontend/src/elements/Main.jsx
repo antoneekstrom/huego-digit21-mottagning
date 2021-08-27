@@ -24,12 +24,14 @@ export function Main() {
     const [texts, setTexts] = useState(undefined)
     const [gridSize, setGridSize] = useState(undefined)
 
+    const isBestColor = color.hex.toLowerCase() === "#09cdda"
+
     useEffect(() => {
         AuthorizedApiCall(() => getLights())
         .then(response => {
             if (response.error) {
                 console.error("Failed to retrieve lights, error: ", response.errResponse)
-                setError("Something went wrong :(")
+                setError(makeError(isBestColor))
             } else {
                 let bigX = -1
                 let bigY = -1
@@ -75,10 +77,17 @@ export function Main() {
             console.log("Unexpected error: " + error);
             setError("Unexpected error")
         })
-    }, [])
+    }, [ isBestColor ])
 
     return (
     <div className="App">
+        {isBestColor && (
+            <div>
+                <img src="confetti.gif" class="confetti" alt="confetti" />
+                <img src="habibi.gif" class="habibi" alt="habibi" />
+                <img src="helicopter.gif" class="helicopter" alt="helicopter" />
+            </div>
+        )}
         <div className="Row">
             <div>
                 <ColorPicker width={400} height={400} color={color}
@@ -91,9 +100,10 @@ export function Main() {
                                    onChange={setColor}/>
                 </div>
                 )}
-                <button className="SetAllButton"
+                <button className="SetAllButton cool"
+                        style={{backgroundColor: isBestColor ? "#09cdda" : "white"}}
                         onClick={() => setLights(updateAllLights(lights, color, setError))}>
-                    SET ALL
+                    {isBestColor ? "GRATTIS DU VANN" : "SET ALL"}
                 </button>
                 <button className="SetAllButton"
                         onClick={() => setLights(updateAllLights(lights, DEFAULT_COLOR, setError))}>
@@ -207,4 +217,8 @@ function logout(setError) {
         console.log("Failed to logout, err: ", error)
         setError("Something went wrong")
     })
+}
+
+function makeError(isBestColor) {
+    return `Something went ${isBestColor ? "right :)" : "wrong :("}`
 }
